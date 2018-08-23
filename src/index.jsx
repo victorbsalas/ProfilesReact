@@ -2,31 +2,41 @@ import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 
 class RootComponent extends Component{
+
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            lastName : "Salas",
+            firstName : "Victor"
+        };
+    }
+
     render(){
         return(<div>
             <form>
-                <InputLastName/>
+                <InputLastName defaultLastName={this.state.lastName} toto={1}/>
                 <br/>
-                <InputFirstName/>
+                <InputFirstName defaultFirstName={this.state.firstName}/>
                 <br/>
             </form></div>)
     }
 }
 
 
-const InputLastName  = () =>
+const InputLastName  = ({defaultLastName}) =>
     (
         <label>
             Nom :
-            <input type={"text"} name={"lastname"}/>
+            <input type="text" name="lastname" defaultValue={defaultLastName}/>
         </label>
     )
 
-const InputFirstName  = () =>
+const InputFirstName  = ({defaultFirstName}) =>
     (
         <label>
             Prénom :
-            <input type={"text"} name={"firstname"}/>
+            <input type="text" name="firstname" defaultValue={defaultFirstName}/>
         </label>
     )
 
