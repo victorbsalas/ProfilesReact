@@ -7,39 +7,73 @@ class RootComponent extends Component{
     {
         super(props);
         this.state = {
-            lastName : "Salas",
-            firstName : "Victor"
+            lastName:"",
+            firstName: "",
+            birthdate: ""
         };
+        this.handleChangeLastName =this.handleChangeLastName.bind(this);
+        this.handleChangeFirstName =this.handleChangeFirstName.bind(this);
     }
 
     render(){
         return(<div>
             <form>
-                <InputLastName defaultLastName={this.state.lastName} toto={1}/>
+                <InputLastName defaultValue={this.state.lastName} handler={this.handleChangeLastName}/>
                 <br/>
-                <InputFirstName defaultFirstName={this.state.firstName}/>
+                <InputFirstName defaultValue={this.state.firstName} handler={this.handleChangeFirstName}/>
                 <br/>
+                <InputBirthdate/>
+                <label>{this.state.firstName + this.state.lastName}</label>
             </form></div>)
     }
+
+    handleChangeLastName (value) {
+        this.setState({
+            lastName: value
+        });
+    }
+
+    handleChangeFirstName (value) {
+        this.setState({
+            firstName: value
+        });
+    }
+
 }
 
 
-const InputLastName  = ({defaultLastName}) =>
-    (
-        <label>
-            Nom :
-            <input type="text" name="lastname" defaultValue={defaultLastName}/>
-        </label>
-    )
+const InputLastName  = (props) => {
 
-const InputFirstName  = ({defaultFirstName}) =>
-    (
+    const localHandler = (e) => {
+        props.handler(e.target.value);
+    }
+    return (<label>
+        Nom :
+        <input type="text" name="lastname" defaultValue={props.defaultValue} onChange={localHandler}/>
+    </label>
+    );
+}
+
+const InputFirstName  = (props) => {
+    const localHandler = (e) => {
+        props.handler(e.target.value);
+    }
+    return(
         <label>
             Prénom :
-            <input type="text" name="firstname" defaultValue={defaultFirstName}/>
+            <input type="text" name="firstname" defaultValue={props.defaultValue} onChange={localHandler}/>
+        </label>
+    );
+}
+const InputBirthdate  = () =>
+    (
+        <label>
+            Date de naissance :
+            <input type="text" name="birthdate" />
         </label>
     )
-
 
 
 ReactDOM.render(<RootComponent/>, document.getElementById("root"));
+
+
